@@ -1,0 +1,65 @@
+logging:level:org:springframework:web: WARN
+
+
+server:
+  port: 9021
+management:
+  endpoint:
+    loggers:
+      enabled: true
+    health:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: loggers, health
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 64MB
+      max-request-size: 64MB
+  cloud:
+    config:
+      import-check:
+        enabled: false
+  datasource:
+    #url value will get either from environment variables or from config server
+    #url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}
+    url: jdbc:postgresql://127.0.0.1:5433/postgres
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:mysecretpassword}
+    jpa:
+      generate-ddl : true
+      hibernate:
+        ddl-auto: create
+#    flyway:
+#      #url value will get either from environment variables or from config server
+#     # url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}
+#      url: jdbc:postgresql://127.0.0.1:5433/postgres
+#      user: ${DB_USER:postgres}
+#      password: ${DB_PASSWORD:virtualHub}
+#      enabled: false
+#      locations: classpath:/db/migration
+#    main:
+#      allow-bean-definition-overriding: true
+
+cloud:
+  aws:
+    credentials:
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
+
+    region:
+      static: ap-south-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: difc-vh
+
+google:
+  map:
+    api:
+      key: ${GOOGLE_MAP_KEY}
