@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Getter
 @Builder
 public class Location implements Serializable {
-    private String lng;
-    private String lat;
+    private float lng;
+    private float lat;
     private String name;
 }
