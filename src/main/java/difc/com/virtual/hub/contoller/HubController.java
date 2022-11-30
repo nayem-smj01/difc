@@ -2,7 +2,6 @@ package difc.com.virtual.hub.contoller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import difc.com.virtual.hub.domain.journey.Journey;
 import difc.com.virtual.hub.domain.journey.JourneyResponse;
 import difc.com.virtual.hub.domain.journey.SaveJourneyRequest;
 import difc.com.virtual.hub.domain.journey.optimalpath.OptimalPath;
@@ -53,9 +52,9 @@ public class HubController {
     }
 
     @PostMapping("/save/v1")
-    public ResponseEntity<UUID> createJourney(@RequestParam("file") MultipartFile file,
-                                                @ModelAttribute @RequestParam("optimalJourney") String optimalJourney) throws JsonProcessingException {
-        if (file.isEmpty()) {
+    public ResponseEntity<UUID> createJourney(@RequestParam(name = "file", required = false) MultipartFile file,
+                                              @ModelAttribute @RequestParam("optimalJourney") String optimalJourney) throws JsonProcessingException {
+        if (optimalJourney == null || optimalJourney.isEmpty()) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         } else {
 
@@ -69,6 +68,7 @@ public class HubController {
 
     @GetMapping("/fetch/{id}")
     public ResponseEntity<JourneyResponse> retrieveRoute(@PathVariable String id) {
+        log.info("Fetch route for id: "+id);
         if (id == null || id.isEmpty()) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         } else {

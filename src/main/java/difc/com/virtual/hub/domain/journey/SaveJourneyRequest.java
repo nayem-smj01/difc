@@ -16,7 +16,7 @@ import java.util.ArrayList;
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SaveJourneyRequest {
-    String name;
+    String userName;
     private Location origin;
     private Location destination;
 

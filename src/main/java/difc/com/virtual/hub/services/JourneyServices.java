@@ -26,16 +26,18 @@ public class JourneyServices {
 
     public JourneyResponse saveJourney(SaveJourneyRequest optimalJourney, MultipartFile file) {
         log.info("optimalJourney : " + optimalJourney);
+        String url = null;
         Journey journey = Journey.builder()
                 .destination(optimalJourney.getDestination())
                 .origin(optimalJourney.getOrigin())
                 .wayPoints(optimalJourney.getWayPoints())
                 .build();
-        String url = s3Service.uploadFile(file);
+        if (file != null && !file.isEmpty())
+            url = s3Service.uploadFile(file);
         JourneyResponse response = JourneyResponse
                 .builder()
                 .journey(journey)
-                .userName(optimalJourney.getName())
+                .userName(optimalJourney.getUserName())
                 .routeImageUrl(url).build();
         return routeRepository.save(response);
     }
